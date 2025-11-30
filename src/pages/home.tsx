@@ -6,7 +6,7 @@ function App() {
   const [monto, setMonto] = useState<number>(500);
   const [plazo, setPlazo] = useState<number>(15);
 
-  const interesBase = plazo === 15 ? 70 : 90;
+  const interesBase = plazo === 16 ? 70 : 90;
   const descuento = 0.5;
   const interesTotal = interesBase * descuento;
 
