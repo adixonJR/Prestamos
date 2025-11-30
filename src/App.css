@@ -1,0 +1,803 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Mitad y mitad SIEMPRE */
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.left-section,
+.right-section {
+  width: 50%;
+  height: 100%;
+}
+
+/* IZQUIERDA */
+.left-section {
+  background: linear-gradient(135deg, #d4008e, #ff7d47);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.big-discount {
+  font-size: 6rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  margin: 0.3rem 0;
+}
+
+.condition {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 1rem;
+}
+
+/* DERECHA */
+.right-section {
+  padding: 2rem;
+}
+
+.title-right {
+  text-align: center;
+  color: #d4008e;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.monto-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.monto-control button {
+  background: #d4008e;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.monto-control input {
+  border: none;
+  font-size: 1.1rem;
+  text-align: center;
+  width: 120px;
+  font-weight: bold;
+}
+
+/* Slider */
+.slider {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Botones Plazo */
+.plazo-btns {
+  display: flex;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.plazo-btns button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #d4008e;
+  background: transparent;
+  color: #d4008e;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.plazo-btns .active {
+  background: #d4008e;
+  color: white;
+}
+
+/* Detalle */
+.detalle {
+  margin-top: 1.2rem;
+}
+
+.detalle p {
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+/* Botón de solicitar */
+.btn-submit {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 15px;
+  border: none;
+  background: #4a1ea3;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Siempre 50/50 → sin media queries */
+
+
+.beneficios-container {
+  width: 100%;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #ffffff;
+}
+
+.beneficios-title {
+  color: #ff7d00;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 2.5rem;
+}
+
+.beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.beneficio-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem 1rem;
+  border: 3px solid #ff00b7;
+  box-shadow: 0px 0px 12px rgba(255, 0, 183, 0.15);
+}
+
+.beneficio-card .icon {
+  font-size: 2.5rem;
+  color: #ff00b7;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.beneficio-card h3 {
+  color: #2e1470;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.beneficio-card p {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* 📱 Responsive */
+@media (max-width: 1024px) {
+  .beneficios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .beneficios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .beneficio-card {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+
+/* ───────────────── ESTADÍSTICAS ───────────────── */
+.stats-section {
+  background: #4b2bbf;
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #fff;
+  border-radius: 0 0 50% 50% / 20%;
+}
+
+.stats-item {
+  text-align: center;
+}
+
+.stats-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.stats-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+/* ───────────────── REQUISITOS ───────────────── */
+.requisitos-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.requisitos-title {
+  font-size: 32px;
+  color: #ff9400;
+  margin-bottom: 40px;
+}
+
+.requisitos-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.requisitos-img img {
+  width: 180px;
+  border-radius: 10px;
+}
+
+/* Números */
+.requisitos-list {
+  display: grid;
+  gap: 10px;
+}
+
+.numero {
+  width: 50px;
+  height: 50px;
+  background: #4b2bbf;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* Banco */
+.requisitos-bank {
+  text-align: center;
+}
+
+.bank-icon {
+  font-size: 80px;
+  color: #4b2bbf;
+}
+
+.bank-text {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #ff9400;
+}
+
+/* ──────────── COLABORADORES ──────────── */
+.partners-section {
+  text-align: center;
+  padding: 50px 0;
+}
+
+.partners-title {
+  font-size: 32px;
+  color: #ff9400;
+  margin-bottom: 30px;
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.partners-logos img {
+  width: 120px;
+  object-fit: contain;
+}
+
+
+/* ──────────── INFO PRÉSTAMO ──────────── */
+.info-prestamo-section {
+  text-align: center;
+  padding: 50px 10px;
+}
+
+.info-prestamo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.info-img img {
+  width: 240px;
+  border-radius: 12px;
+}
+
+.info-text {
+  max-width: 450px;
+  text-align: left;
+}
+
+.info-text h3 {
+  color: #ff9400;
+  margin-bottom: 8px;
+}
+
+.underlined {
+  text-decoration: underline;
+  margin-bottom: 18px;
+  color: #6e4cac;
+  font-weight: 600;
+}
+
+.example {
+  font-size: 18px;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.costos {
+  text-align: left;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.total {
+  color: #1f1a50;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.disclaimer {
+  margin-top: 40px;
+  font-size: 12px;
+  color: #5d5d5d;
+}
+/* ──────────── TESTIMONIOS ──────────── */
+.testimonios-section {
+  text-align: center;
+  padding: 60px 10px;
+}
+
+.testimonios-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ff9400;
+  margin-bottom: 10px;
+}
+
+.testimonios-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 40px;
+}
+
+.testimonios-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.testimonio-card {
+  width: 290px;
+  border: 2px solid #4c32a2;
+  border-radius: 18px;
+  padding: 20px;
+  text-align: left;
+  background: #fff;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.testimonio-card .stars {
+  color: #ffa800;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.testimonio-card p {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.testimonio-card h4 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* ──────────── BANNER FINAL ──────────── */
+.banner-final {
+  text-align: center;
+  background: #ffb32b;
+  color: #fff;
+  padding: 16px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 50px;
+}
+
+/* Variables para los colores (opcional, pero útil) */
+:root {
+  --primary-color: #3f1e7d; /* Color principal similar al morado del logo/enlaces */
+  --cta-bg-color: #123456; /* Azul oscuro para el botón CTA */
+  --cta-hover-color: #0d2745; 
+  --text-color: #333;
+}
+
+/* --- Estilos de la Barra de Navegación --- */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Espacio entre logo y enlaces */
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #fff; /* Fondo blanco */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo del Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+}
+
+.logo-x {
+  color: #ff5733; /* Color brillante para la 'X' o símbolo de Merite */
+  margin-right: 5px;
+  font-size: 30px; /* Tamaño más grande para el símbolo */
+  line-height: 1; /* Asegura que la línea de base sea correcta */
+}
+
+/* Estilos de los Enlaces de Navegación */
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 14px;
+  margin-right: 20px;
+  padding: 5px 0;
+  transition: color 0.3s;
+}
+
+.nav-link:first-child { /* Estilo para "Inicio" (o el primer enlace activo) */
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  color: var(--primary-color);
+}
+
+/* Estilo del Botón CTA (Zona de Clientes) */
+.cta-button {
+  background-color: var(--cta-bg-color);
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  /* El botón de la imagen es más grande y se ve como un bloque sólido */
+  white-space: nowrap; /* Evita que el texto se rompa */
+  margin-left: 20px; /* Separa del último enlace */
+}
+
+.cta-button:hover {
+  background-color: var(--cta-hover-color);
+}
+
+/* --- Estilos Responsive (Móvil) --- */
+
+/* Ocultar el botón de alternancia en escritorio */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--cta-bg-color);
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    padding: 10px 20px;
+  }
+
+  /* Mostrar el botón de alternancia en móvil */
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Ocultar los enlaces por defecto */
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* Ajusta la altura de la navbar */
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px 0;
+  }
+
+  /* Mostrar los enlaces cuando el menú está abierto */
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .nav-link {
+    margin: 10px 0;
+    padding: 10px 20px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* El botón CTA también se comporta como un enlace en la lista */
+  .cta-button {
+    margin: 10px 0;
+    padding: 12px 20px;
+    width: 90%; /* Hace que ocupe casi todo el ancho */
+    text-align: center;
+  }
+}
+
+/* Variables para mantener la consistencia de los colores del Merite Footer */
+:root {
+  --merite-pink: #ffc0cb; /* El color de fondo rosa fuerte */
+  --text-color-dark: #333; /* Texto oscuro para títulos y enlaces */
+  --text-color-light: #fff; /* Texto blanco para la sección legal */
+  --logo-purple: #3f1e7d; 
+}
+
+/* Contenedor principal del Footer */
+.footer-container {
+  background-color: var(--merite-pink);
+  color: var(--text-color-dark);
+  padding: 40px 20px 10px; /* Padding ajustado */
+  font-family: Arial, sans-serif;
+  overflow: hidden; /* Para contener los elementos flotantes si los hubiera */
+}
+
+/* Wrapper para las columnas */
+.footer-content-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap; /* Permite que las columnas se apilen en pantallas pequeñas */
+  max-width: 1200px; /* Ancho máximo para centrar */
+  margin: 0 auto 30px; /* Centrado y espacio inferior */
+  text-align: left;
+}
+
+.footer-col {
+  width: 22%; /* Asigna un ancho aproximado para 4 columnas */
+  min-width: 200px; /* Ancho mínimo para evitar que se aplasten demasiado */
+  margin-bottom: 20px;
+}
+
+/* Estilo de Títulos de Columna */
+.footer-col h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--text-color-dark);
+}
+
+/* --- Columna 1: Info y Logo --- */
+.footer-logo {
+  margin-bottom: 20px;
+}
+
+.logo-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--logo-purple);
+  display: flex;
+  align-items: center;
+}
+
+.logo-x {
+  color: #ff5733; 
+  margin-right: 5px;
+  font-size: 35px;
+  line-height: 1;
+}
+
+.sbs-info {
+  font-size: 0.8em;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.sbs-lock-icon {
+  font-size: 2em;
+  color: var(--logo-purple);
+  margin-bottom: 5px;
+}
+
+.sbs-info a {
+  color: var(--logo-purple);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+/* Redes Sociales */
+.social-text {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--logo-purple);
+  color: var(--text-color-light);
+  text-decoration: none;
+  margin-right: 8px;
+  font-size: 0.9em;
+}
+
+/* --- Columna 2 y 3: Enlaces --- */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: var(--text-color-dark);
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+  color: var(--logo-purple);
+}
+
+/* Libro de Reclamaciones */
+.libro-reclamaciones {
+  margin-top: 30px;
+  text-align: center;
+  background-color: #fff; /* Fondo blanco para resaltarlo */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--logo-purple);
+}
+
+.libro-reclamaciones h4 {
+  font-size: 1em;
+  margin: 0 0 5px 0;
+}
+
+.book-icon {
+  font-size: 2.5em;
+  line-height: 1;
+}
+
+
+/* --- Columna 4: Contacto --- */
+.contact-info p {
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.contact-info a {
+  color: var(--text-color-dark);
+  text-decoration: none;
+}
+
+.whatsapp-note {
+  font-size: 0.8em;
+  color: #555;
+}
+
+/* --- Sección de Derechos de Autor (Centro) --- */
+.footer-bottom-copy {
+  text-align: center;
+  font-size: 0.85em;
+  font-weight: bold;
+  padding: 10px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+/* --- Sección de Párrafo Legal Completo (Abajo) --- */
+.footer-legal-text {
+  text-align: center;
+  font-size: 0.7em; /* Texto muy pequeño como en la imagen */
+  line-height: 1.5;
+  color: #666; /* Un poco más oscuro para que se vea sobre el rosa */
+  padding: 10px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 900px) {
+  .footer-content-wrapper {
+    justify-content: flex-start; /* Alinea las columnas a la izquierda */
+  }
+
+  .footer-col {
+    width: 45%; /* Dos columnas por fila */
+    margin-right: 5%;
+  }
+
+  /* La columna de info puede ocupar el 100% en móvil para un mejor flujo */
+  .footer-info-col {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-col {
+    width: 100%; /* Una columna por fila */
+    margin-right: 0;
+  }
+
+  /* Ajustar márgenes para una mejor separación */
+  .footer-col h3 {
+    margin-top: 20px;
+  }
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
