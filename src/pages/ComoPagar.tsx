@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../estilos.css/ComoPgar.css";
 
 const PagoPrestamo: React.FC = () => {

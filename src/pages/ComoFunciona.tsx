@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../estilos.css/ComoFunciona.css";
 
 interface NumberPinProps {

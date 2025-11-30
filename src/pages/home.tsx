@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "../App.css";
-import foto1 from "../assets/OIP.webp";
-import logo from "../assets/react.svg";
+
 
 function App() {
   const [monto, setMonto] = useState<number>(500);

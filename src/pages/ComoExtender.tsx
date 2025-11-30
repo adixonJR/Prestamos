@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../estilos.css/ExtensionPago.css";
 
 const ExtensionPago: React.FC = () => {
