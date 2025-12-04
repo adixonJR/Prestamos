@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
-
+import logo from "../assets/logo.svg"
 interface NavLink {
   text: string;
   href: string;
@@ -20,11 +20,17 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="navbar">
-      <div className="navbar-logo">
-        <span className="logo-text">
-          <span className="logo-x">X</span>Merite
-        </span>
-      </div>
+    <nav className="">
+    <nav className="flex items-center px-4 h-12 bg-transparent">
+  <img
+    src={logo}
+    alt="Prestamos JB logo"
+    className="h-full w-auto object-contain hover:scale-105 transition-transform"
+  />
+</nav>
+
+</nav>
+
 
       <div className={`navbar-links ${isOpen ? "open" : ""}`}>
         {navLinks.map((link) => (

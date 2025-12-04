@@ -11,7 +11,7 @@ const Articulos = () => {
   const [articulos, setArticulos] = useState<Articulo[]>([]);
 
   useEffect(() => {
-    // Simulación de datos obtenidos de una API
+    
     const data: Articulo[] = [
       {
         id: 1,
@@ -40,7 +40,11 @@ const Articulos = () => {
   }, []);
 
   return (
-    <div className="container">
+    
+    <div className="how-section">
+      <header className="how-header">
+        <h1>Articulos</h1>
+      </header>
       <h1 className="title">Artículos Informativos</h1>
 
       <div className="grid">

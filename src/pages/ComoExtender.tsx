@@ -1,14 +1,13 @@
 
 import "../estilos.css/ExtensionPago.css";
-
+import calendario from "../assets/calendario.jpg";
 const ExtensionPago: React.FC = () => {
   return (
     <div className="extension-wrapper">
 
-      {/* ENCABEZADO */}
-      <div className="header-gradient">
-        <h1>Extensión de fecha de pago</h1>
-      </div>
+<header className="how-header">
+        <h1>¿Cómo Extender?</h1>
+      </header>
 
       {/* CONTENIDO PRINCIPAL */}
       <div className="extension-content">
@@ -40,15 +39,12 @@ const ExtensionPago: React.FC = () => {
 
           <h2 className="subtitle">¿Cómo solicitar?</h2>
 
-          <button className="video-btn">
-            ▶ Mira este video
-          </button>
         </div>
 
         {/* IMAGEN DERECHA */}
         <div className="right-section">
           <img
-            src="/images/calendar.jpg"
+            src={calendario}
             alt="Calendario marcado"
           />
         </div>
