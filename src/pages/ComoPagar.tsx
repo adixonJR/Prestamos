@@ -20,7 +20,7 @@ const PagoPrestamo: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       {/* Header con gradiente */}
-      <div className="bg-gradient-to-r from-pink-600 to-purple-700 text-white text-center py-12 rounded-lg shadow-lg mb-10">
+      <div className="bg-gradient-to-r from-purple-700 to-purple-700 text-white text-center py-12 rounded-lg shadow-lg mb-10">
         <h1 className="text-4xl font-extrabold">Cómo Pagar</h1>
       </div>
 

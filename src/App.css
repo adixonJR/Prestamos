@@ -42,6 +42,8 @@
   .animate-bounceSlow {
     animation: bounceSlow 1.6s ease-in-out infinite;
   }
+
+  
 /*testimonios*/
 @keyframes fadeSlideUp {
     0% {

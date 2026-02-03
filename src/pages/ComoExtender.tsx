@@ -15,7 +15,8 @@ const ExtensionPago: React.FC = () => {
         {/* COLUMNA IZQUIERDA */}
         <div className="left-section">
           <div className="card-box">
-            <h3>¿Qué es una extensión?</h3>
+          <h3><strong>¿Qué es una extensión?</strong></h3>
+
             <p>
               Es un beneficio que te permite ampliar la fecha de pago de tu préstamo
               por 30 días
@@ -23,7 +24,7 @@ const ExtensionPago: React.FC = () => {
           </div>
 
           <div className="card-box">
-            <h3>¿Quiénes pueden solicitar una extensión?</h3>
+            <h3><strong>¿Quiénes pueden solicitar una extensión?</strong></h3>
             <p>
               Clientes con un préstamo activo a una sola cuota cuya fecha de
               vencimiento no haya superado los 30 días de atraso en el pago

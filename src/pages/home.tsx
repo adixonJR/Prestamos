@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import "../estilos.css/home.css";
 import "../index.css";
-
+import fondo from "../assets/fondo.mp4";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
 
 import foto from "../assets/OIP.webp";
 import chicadinero from "../assets/descarga.webp";
@@ -18,12 +19,14 @@ import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/s
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  const navigate = useNavigate();
+
   // -----------------------------
   // ESTADOS PRINCIPALES
   // -----------------------------
   const [monto, setMonto] = useState(500);
   const [tipo, setTipo] = useState<"cuotas" | "unico">("cuotas");
-  const [plazo, setPlazo] = useState<15 | 30 | 90>(90);
+  const [plazo, setPlazo] = useState<number>(90);
   const [requisitoActivo, setRequisitoActivo] = useState(0);
 
   const handleMonto = (val: number) => {
@@ -50,16 +53,18 @@ function App() {
   // CÁLCULOS DEL PRÉSTAMO
   // -----------------------------
   const interesTotal =
-    tipo === "cuotas"
-      ? monto * 0.18
-      : plazo === 15
-      ? monto * 0.12
-      : monto * 0.18;
+  tipo === "cuotas"
+    ? monto * 0.18
+    : plazo === 15
+    ? monto * 0.10
+    : plazo === 30
+    ? monto * 0.20
+    : 0;
 
   const custodia = monto * 0.05;
   const tecnologia = tipo === "cuotas" ? monto * 0.08 : monto * 0.06;
   const igv = (interesTotal + tecnologia) * 0.18;
-  const total = monto + interesTotal + custodia + tecnologia + igv;
+  const total = monto + interesTotal ;
 
   const requisitos = [
     "Documento DNI vigente",
@@ -86,14 +91,14 @@ function App() {
   const stats = [
     { icon: "📅", value: 90, sub: "Plazo de pago" },
     { icon: "🏅", value: 1, sub: "Fintech préstamos" },
-    { icon: "👛", value: 800000, sub: "Solicitudes" },
-    { icon: "🌍", value: 8, sub: "Países" },
+    { icon: "👛", value: 100, sub: "Solicitudes" },
+    { icon: "🌍", value: 1, sub: "distrito" },
   ];
 
   const [counters, setCounters] = useState([0, 0, 0, 0]);
 
   useEffect(() => {
-    const durations = [90, 1, 800000, 8];
+    const durations = [90, 1 , 100, 1];
 
     durations.forEach((max, index) => {
       let start = 0;
@@ -119,6 +124,8 @@ function App() {
   // -----------------------------
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rightRef = useRef<HTMLDivElement | null>(null);
+
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -170,190 +177,220 @@ function App() {
   return (
     <>
       {/* CONTENEDOR PRINCIPAL */}
-      <div className="flex flex-col md:flex-row w-full h-auto md:h-screen">
+<div className="flex flex-col md:flex-row w-full h-auto md:h-screen">
 
-        {/* IZQUIERDA */}
-        <div
-          ref={containerRef}
-          className="w-full md:w-1/2 h-full text-white flex flex-col justify-center p-10 text-center"
-          style={{
-            background: "linear-gradient(to right, #e91e63, #7c2ae8)",
-            fontSize: "28px",
-            fontWeight: "800",
-            paddingTop: "40px",
-            paddingBottom: "40px",
-          }}
-        >
-          <h1 className="text-2xl md:text-3xl font-semibold">Préstamos personales</h1>
-          <h2 className="text-7xl md:text-9xl font-extrabold leading-none mt-3">50%</h2>
-          <p className="text-lg mt-3">De descuento en intereses en tu primer préstamo online</p>
+{/* IZQUIERDA CON VIDEO DE FONDO */}
+<div className="relative w-full md:w-1/2 h-[500px] md:h-full text-pink-600 flex flex-col justify-center items-center p-10 text-center overflow-hidden">
 
-          <small className="text-sm opacity-90 mt-5">
-            *El descuento se perderá si el pago se realiza después del vencimiento.
-          </small>
-        </div>
+  {/* VIDEO BACKGROUND */}
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-fulFl h-full object-cover"
+  >
+    <source src={fondo} type="video/mp4" />
+  </video>
 
-        {/* DERECHA */}
-        <div
-          ref={rightRef}
-          className="w-full md:w-1/2 h-full flex flex-col items-center justify-center p-6 bg-gray-100 overflow-auto"
-        >
+  {/* CAPA OSCURA */}
+  <div className="absolute inset-0 bg-black/40"></div>
 
-
-  {/* Título */}
-  <div className="w-full text-center py-4 font-bold text-lg text-[#04BF20]">
-    ⬇️ Elige aquí el tipo de préstamo que necesitas ⬇️
-  </div>
-
-  {/* Tabs */}
-  <div className="flex w-full max-w-xl rounded-lg overflow-hidden border border-[#04BF20]">
-    <button
-      onClick={() => {
-        setTipo("cuotas");
-        setPlazo(90);
-      }}
-      className={`w-1/2 py-3 font-semibold ${
-        tipo === "cuotas"
-          ? "bg-[#04BF20] text-white"
-          : "text-[#04BF20] bg-white"
-      }`}
-    >
-      Pago a Cuotas
-    </button>
-
-    <button
-      onClick={() => {
-        setTipo("unico");
-        setPlazo(15);
-      }}
-      className={`w-1/2 py-3 font-semibold ${
-        tipo === "unico"
-          ? "bg-[#04BF20] text-white"
-          : "text-[#04BF20] bg-white"
-      }`}
-    >
-      Pago Único
-    </button>
-  </div>
-
-  {/* Monto */}
-  <div className="w-full max-w-xl mt-6 px-2">
-    <p className="font-semibold text-base">¿Cuánto necesitas?</p>
-
-    <div className="flex gap-3 mt-3 items-center">
-      <button
-        onClick={() => handleMonto(monto - 50)}
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#04BF20] text-white text-xl"
-      >
-        −
-      </button>
-
-      <input
-        type="range"
-        min={200}
-        max={5000}
-        step={50}
-        value={monto}
-        onChange={(e) => handleMonto(Number(e.target.value))}
-        className="flex-1 accent-[#04BF20]"
-      />
-
-      <button
-        onClick={() => handleMonto(monto + 50)}
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-[#04BF20] text-white text-xl"
-      >
-        +
-      </button>
-    </div>
-
-    <p className="mt-2 font-bold text-[#04BF20] text-xl text-end">
-      S/ {monto.toFixed(2)}
+  {/* CONTENIDO ENCIMA */}
+  <div className="relative z-10" style={{ fontSize: "26px", fontWeight: "800" }}>
+    <h1 className="text-2xl text-purple-800 md:text-3xl font-semibold">Préstamos personales</h1>
+    <h2 className="text-6xl text-purple-800 md:text-3xl font-extrabold leading-none mt-3">GRANDES DESCUENTOS</h2>
+    <p className="text-base mt-3 text-purple-800">
+      De descuento en intereses en tu primer préstamo online
     </p>
+
+    <small className="text-xs opacity-90 mt-4 block text-purple-800" >
+      *El descuento se perderá si el pago se realiza después del vencimiento.
+    </small>
   </div>
 
-  <div className="w-full max-w-xl mt-6 px-2">
-  <p className="font-semibold">Plazo</p>
+</div>
 
-  {tipo === "cuotas" ? (
-    <div className="text-center w-full py-3 rounded-lg font-bold text-[#04BF20] border border-[#04BF20] text-lg mt-2">
-      3 cuotas (90 días)
+{/* DERECHA (REDUCIDO AL 80%) */}
+<div
+  ref={rightRef}
+  className="md:w-1/2 h-full flex flex-col items-center justify-start p-6 bg-gray-100 overflow-hidden"
+>
+
+  {/* Escala general al 80% */}
+  <div className="w-full max-w-[90%] scale-[0.80] origin-top">
+
+    {/* Título */}
+    <div className="w-full text-center py-2 font-bold text-lg text-[#04BF20]">
+      Elige aquí el tipo de préstamo que necesitas
     </div>
-  ) : (
-    <div className="flex gap-3 mt-2">
-      {([15, 30] as const).map((d) => (
+
+    {/* Tabs */}
+    <div className="flex w-full max-w-lg gap-2 mt-2">
+      <button
+        onClick={() => {
+          setTipo("cuotas");
+          setPlazo(90);
+        }}
+        className={`flex-1 py-3 text-base font-semibold rounded-lg shadow-md transition-all duration-200 ${
+          tipo === "cuotas"
+            ? "bg-[#04BF20] text-white"
+            : "text-[#04BF20] bg-white border border-[#04BF20]"
+        }`}
+      >
+        Pago a Cuotas
+      </button>
+
+      <button
+        onClick={() => {
+          setTipo("unico");
+          setPlazo(15);
+        }}
+        className={`flex-1 py-3 text-base font-semibold rounded-lg shadow-md transition-all duration-200 ${
+          tipo === "unico"
+            ? "bg-[#04BF20] text-white"
+            : "text-[#04BF20] bg-white border border-[#04BF20]"
+        }`}
+      >
+        Pago Único
+      </button>
+    </div>
+
+    {/* Monto */}
+    <div className="w-full max-w-lg mt-6 bg-white p-4 rounded-lg shadow">
+      <p className="font-semibold text-sm">¿Cuánto necesitas?</p>
+
+      <div className="flex gap-3 mt-3 items-center">
         <button
-          key={d}
-          onClick={() => setPlazo(d)}
-          className={`flex-1 py-3 rounded-lg text-lg font-bold ${
-            plazo === d
-              ? "bg-[#04BF20] text-white"
-              : "border border-[#04BF20] text-[#04BF20]"
-          }`}
+          onClick={() => handleMonto(monto - 50)}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-[#04BF20] text-white text-xl"
         >
-          {d} días
+          −
         </button>
-      ))}
+
+        <input
+          type="range"
+          min={200}
+          max={5000}
+          step={50}
+          value={monto}
+          onChange={(e) => handleMonto(Number(e.target.value))}
+          className="flex-1 accent-[#04BF20] h-2"
+        />
+
+        <button
+          onClick={() => handleMonto(monto + 50)}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-[#04BF20] text-white text-xl"
+        >
+          +
+        </button>
+      </div>
+
+      <p className="mt-2 font-bold text-[#04BF20] text-xl text-end">
+        S/ {monto.toFixed(2)}
+      </p>
     </div>
-  )}
-</div>
 
+    {/* Plazo */}
+    <div className="w-full max-w-lg mt-5 bg-white p-4 rounded-lg shadow">
+      <p className="font-semibold text-sm">Plazo</p>
 
-  {/* Detalle de Costos */}
-  <div className="w-full max-w-xl mt-6 p-4 bg-white shadow rounded-lg">
-    <div className="grid grid-cols-2 gap-2 text-sm">
-      <p>Cantidad Solicitada</p><p className="text-right">S/ {monto.toFixed(2)}</p>
-      <p>Custodia</p><p className="text-right">S/ {custodia.toFixed(2)}</p>
-      <p>Tecnología</p><p className="text-right">S/ {tecnologia.toFixed(2)}</p>
-      <p>Interés Total</p><p className="text-right">S/ {interesTotal.toFixed(2)}</p>
-      <p>IGV</p><p className="text-right">S/ {igv.toFixed(2)}</p>
-
-      <p className="font-bold mt-2">Total a Pagar</p>
-      <p className="font-bold text-right mt-2">S/ {total.toFixed(2)}</p>
-
-      <p className="font-semibold">Fecha de Pago</p>
-      <p className="text-right font-semibold">{fecha}</p>
+      {tipo === "cuotas" ? (
+        <div className="text-center w-full py-3 rounded-lg font-bold text-[#04BF20] border border-[#04BF20] text-base mt-3">
+          3 cuotas (90 días)
+        </div>
+      ) : (
+        <div className="flex gap-2 mt-3">
+          {[15, 30].map((d) => (
+            <button
+              key={d}
+              onClick={() => setPlazo(d)}
+              className={`flex-1 py-2 rounded-lg text-base font-bold ${
+                plazo === d
+                  ? "bg-[#04BF20] text-white"
+                  : "border border-[#04BF20] text-[#04BF20]"
+              }`}
+            >
+              {d} días
+            </button>
+          ))}
+        </div>
+      )}
     </div>
+
+    {/* Detalle de Costos */}
+    <div className="w-full max-w-lg mt-5 p-3 bg-white shadow rounded-lg text-sm">
+      <div className="grid grid-cols-2 gap-1">
+        <p>Cantidad Solicitada</p>
+        <p className="text-right">S/ {monto.toFixed(2)}</p>
+        
+        
+
+        <p>Interés Total</p>
+        <p className="text-right">S/ {interesTotal.toFixed(2)}</p>
+        
+        
+
+        <p className="font-bold mt-1">Total a Pagar</p>
+        <p className="font-bold text-right mt-1">S/ {total.toFixed(2)}</p>
+
+        <p className="font-semibold">Fecha de Pago</p>
+        <p className="text-right font-semibold">{fecha}</p>
+      </div>
+    </div>
+
+    <button
+  type="button"
+  onClick={() =>
+    navigate("/tramite", {
+      state: {
+        tipo,
+        monto,
+        plazo,
+        interesTotal,
+        total,
+        fecha,
+      },
+    })
+  }
+  className="mt-6 bg-[#04BF20] text-white w-full max-w-lg py-3 text-lg font-bold rounded-full shadow"
+>
+  Solicítalo Ahora
+</button>
+
   </div>
-
-  {/* Botón */}
-  <button className="mt-8 bg-[#04BF20] text-white w-full max-w-xl py-4 text-lg font-bold rounded-full shadow">
-    Solicítalo Ahora
-  </button>
-
-</div>
 </div>
 
 
+</div>
 
-    {/* Beneficios */}
+{/* Beneficios */}
 <section className="w-full py-20 px-6 text-center bg-white">
-  <h2 className="text-green-600 text-3xl md:text-4xl font-extrabold mb-14">
+  <h2 className="text-[#04BF20] text-3xl md:text-4xl font-extrabold mb-14">
     Préstamos online
   </h2>
 
   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
 
-    {/* CARD */}
-    {[ 
+    {[
       { icon: "%", title: "Descuento en intereses", text: "Primer préstamo con 50% de descuento en intereses. ¡Aprovéchalo!" },
       { icon: "⚡", title: "Préstamos en menos de 24h", text: "100% digital. Sin colas. Sin papeleo." },
       { icon: "⭐", title: "¿Por qué elegirnos?", text: "Préstamos rápidos, simples y hechos para ti." },
       { icon: "⏱", title: "Respuesta inmediata", text: "Aprobamos en segundos. Tu tiempo vale." },
     ].map((item, index) => (
-      
       <div
         key={index}
         className="
           relative group bg-white rounded-2xl p-7 border border-pink-400 shadow-lg 
           transition-all duration-500 
-          hover:-translate-y-3 hover:shadow-2xl hover:scale-[1.03] 
-          opacity-0 animate-fadeSlideUp
+          hover:-translate-y-3 hover:shadow-2xl hover:scale-[1.05] 
+          animate-cardEnter
         "
-        style={{ animationDelay: `${index * 0.2}s` }}
+        style={{ animationDelay: `${index * 0.15}s` }}
       >
-        {/* Brillo lateral */}
+        {/* Glow suave */}
         <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none 
-          bg-gradient-to-r from-pink-200/30 to-purple-200/30 blur-xl">
+          bg-gradient-to-r from-pink-200/40 to-purple-200/40 blur-xl">
         </div>
 
         <span className="text-5xl font-extrabold text-pink-600 block">
@@ -368,7 +405,6 @@ function App() {
           {item.text}
         </p>
       </div>
-
     ))}
 
   </div>
@@ -376,7 +412,7 @@ function App() {
 
 
 <section className="bg-[#4b2bbf] py-14 flex justify-around items-center text-white 
-                        rounded-b-[60%/18%] shadow-lg animate-fadeSlideUp">
+    rounded-bl-[120px] rounded-br-[120px] shadow-lg animate-fadeSlideUp">
       
       {stats.map((item, i) => (
         <div key={i} className="text-center transition-all duration-500 hover:scale-110">
@@ -390,23 +426,23 @@ function App() {
           <small className="text-sm opacity-90">{item.sub}</small>
         </div>
       ))}
-    </section>
+</section>
 
 
-   {/* Requisitos */}
+{/* ===========================
+      SECCIÓN: REQUISITOS
+=========================== */}
 <section
-  className="py-16 px-6 text-center bg-white overflow-hidden"
   id="requisitos"
+  className="py-20 px-6 text-center bg-white overflow-hidden"
 >
-  <h2
-    className="text-3xl md:text-4xl font-bold text-[#04BF20] mb-12 opacity-0 animate-fadeUp"
-  >
+  <h2 className="text-3xl md:text-4xl font-bold text-[#04BF20] mb-12 opacity-0 animate-fadeUp">
     ¿Qué requisitos debes cumplir?
   </h2>
 
-  <div className="flex flex-col md:flex-row gap-12 items-center justify-center">
+  <div className="flex flex-col md:flex-row gap-16 items-center justify-center max-w-6xl mx-auto">
 
-    {/* Imagen con animación */}
+    {/* Imagen */}
     <div
       className="md:w-1/2 opacity-0 animate-slideLeft"
       style={{ animationDelay: "0.3s" }}
@@ -420,11 +456,10 @@ function App() {
 
     {/* Lista y botones */}
     <div
-      className="flex flex-col items-center gap-6 opacity-0 animate-fadeUp"
+      className="flex flex-col items-center gap-8 opacity-0 animate-fadeUp"
       style={{ animationDelay: "0.6s" }}
     >
-
-      {/* Botones con animación al seleccionar */}
+      {/* Botones */}
       <div className="flex gap-6 flex-wrap justify-center">
         {requisitos.map((_, index) => (
           <button
@@ -445,49 +480,62 @@ function App() {
         ))}
       </div>
 
-      {/* Texto dinámico con fade */}
+      {/* Texto dinámico */}
       <p
         key={requisitoActivo}
-        className="text-gray-800 font-semibold text-xl mt-3 px-4 animate-fade"
+        className="text-gray-800 font-semibold text-xl mt-3 px-6 animate-fade max-w-lg"
       >
         {requisitos[requisitoActivo]}
       </p>
 
-      {/* Emoji extra */}
+      {/* Emoji */}
       {requisitoActivo === 3 && (
-        <span className="text-6xl text-[#4b2bbf] mt-2 animate-pop">🏦</span>
+        <span className="text-6xl text-[#4b2bbf] mt-2 animate-pop"></span>
       )}
     </div>
 
   </div>
 </section>
 
-<section className="py-12 text-center">
-  <h2 className="text-3xl md:text-4xl font-bold text-[#04BF20] mb-10">
-    Nuestros colaboradores
-  </h2>
+{/*
+{/* ===========================
+    SECCIÓN: COLABORADORES
+=========================== 
+<section className="py-20 text-center bg-gray-50">
+  <div className="max-w-4xl mx-auto px-6">
 
-  <div className="relative w-full overflow-hidden mt-8" style={{ height: 180 }}>
-    <LogoLoop
-      logos={techLogos}
-      speed={90}
-      direction="left"
-      logoHeight={80}
-      gap={60}
-      hoverSpeed={5}
-      scaleOnHover
-      fadeOut
-      fadeOutColor="#ffffff"
-      ariaLabel="Aliados estratégicos"
-    />
+    <h2 className="text-3xl md:text-4xl font-bold text-[#04BF20] mb-12">
+      Nuestros colaboradores
+    </h2>
+
+    <div 
+      className="relative overflow-hidden mx-auto rounded-xl shadow-md bg-white 
+                 flex items-center justify-center"
+      style={{ height: 150, width: "85%" }}
+    >
+      <LogoLoop
+        logos={techLogos}
+        speed={90}
+        direction="left"
+        logoHeight={70}
+        gap={50}
+        hoverSpeed={5}
+        scaleOnHover
+        fadeOut
+        fadeOutColor="#ffffff"
+        ariaLabel="Aliados estratégicos"
+      />
+    </div>
+
   </div>
 </section>
+*/}
 
-
-
-      {/* Ejemplo de préstamo */}
-<section className="text-center py-14 px-4">
-  <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-center items-center gap-12">
+{/* ===========================
+    SECCIÓN: EJEMPLO PRÉSTAMO
+=========================== */}
+<section className="py-20 px-4 bg-white">
+  <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-center items-center gap-16">
 
     {/* Imagen */}
     <div className="flex justify-center flex-1">
@@ -501,12 +549,10 @@ function App() {
     {/* Texto */}
     <div className="flex-1 text-left max-w-md space-y-3">
       <h3 className="text-2xl font-bold text-[#04BF20]">
-        ¿Cómo funcionan los préstamos Merite?
+        ¿Cómo funcionan los préstamos?
       </h3>
 
-      <p className="underline font-semibold text-[#6e4cac]">
-        Ejemplo préstamo online
-      </p>
+      
 
       <p className="text-lg font-bold text-gray-800">
         300 soles a pagar en 90 días
@@ -514,37 +560,54 @@ function App() {
 
       <ul className="space-y-1 text-gray-700 font-medium">
         <li>Tarifa de Tecnología: <span className="font-bold">S/. 60.00</span></li>
-        <li>Custodia: <span className="font-bold">S/. 38.01</span></li>
+       
         <li>Interés: <span className="font-bold">S/. 43.98</span></li>
-        <li>IGV: <span className="font-bold">S/. 25.56</span></li>
+       
       </ul>
 
       <p className="text-xl font-bold text-[#1f1a50]">
         Total a pagar: <span className="text-pink-600">S/. 467.55</span>
       </p>
 
-      {/* CTA */}
-      <button className="mt-4 bg-pink-600 text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-pink-700 hover:scale-105 transition-all duration-300">
-        Solicitar mi préstamo ahora
-      </button>
+      
+  <button
+  type="button"
+  onClick={() =>
+    navigate("/tramite", {
+      state: {
+        tipo,
+        monto,
+        plazo,
+        interesTotal,
+        total,
+        fecha,
+      },
+    })
+  }
+  className="mt-6 bg-[#04BF20] text-white w-full max-w-lg py-3 text-lg font-bold rounded-full shadow"
+>
+  Solicítalo Ahora
+</button>
+
     </div>
   </div>
 
-  {/* Disclaimer */}
-  <p className="text-xs text-gray-500 mt-6 px-6 max-w-2xl mx-auto">
+  <p className="text-xs text-gray-500 mt-8 text-center max-w-2xl mx-auto">
     Los montos y costos son referenciales y pueden variar según evaluación crediticia del cliente.
   </p>
 </section>
 
 
-      {/* Testimonios */}
-<section className="w-full py-20 bg-gray-50">
-  <div className="text-center mb-12 px-6">
+{/* ===========================
+    SECCIÓN: TESTIMONIOS
+=========================== */}
+<section className="w-full py-24 bg-gray-50">
+  <div className="text-center mb-16 px-6">
     <h2 className="text-3xl md:text-4xl font-bold text-green-600">Testimonios</h2>
     <p className="text-gray-700 text-lg mt-2 font-medium">Nuestros clientes opinan</p>
   </div>
 
-  <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-6">
+  <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-6">
     
     {/* Card 1 */}
     <div className="bg-white border border-purple-600 p-6 rounded-2xl shadow-lg hover:shadow-purple-300 transition-transform duration-300 hover:scale-105 cursor-pointer group">
@@ -556,16 +619,13 @@ function App() {
     </div>
     
     {/* Card 2 */}
-<div className="bg-white border border-purple-600 p-8 rounded-3xl shadow-xl 
-     hover:shadow-purple-300 transition-transform duration-300 hover:scale-110 
-     cursor-pointer group transform lg:-translate-y-3">
-  <div className="text-green-600 text-2xl mb-4 group-hover:scale-110 transition-transform duration-200">
-    ★★★★★
-  </div>
-  <p className="text-gray-700 mb-4 text-lg">Desembolso rápido y seguro.</p>
-  <h4 className="text-gray-900 font-bold text-xl">Renzo Huamanyauri</h4>
-</div>
-
+    <div className="bg-white border border-purple-600 p-8 rounded-3xl shadow-xl hover:shadow-purple-300 transition-transform duration-300 hover:scale-110 cursor-pointer group transform lg:-translate-y-3">
+      <div className="text-green-600 text-2xl mb-4 group-hover:scale-110 transition-transform duration-200">
+        ★★★★★
+      </div>
+      <p className="text-gray-700 mb-4 text-lg">Desembolso rápido y seguro.</p>
+      <h4 className="text-gray-900 font-bold text-xl">Renzo Huamanyauri</h4>
+    </div>
 
     {/* Card 3 */}
     <div className="bg-white border border-purple-600 p-6 rounded-2xl shadow-lg hover:shadow-purple-300 transition-transform duration-300 hover:scale-105 cursor-pointer group">
@@ -578,6 +638,7 @@ function App() {
 
   </div>
 </section>
+
 
 {/* Banner Final */}
 <div className="w-full text-center bg-green-600 text-white font-semibold text-lg md:text-xl py-4 mt-10 animate-bounce">

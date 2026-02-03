@@ -13,26 +13,26 @@ const FaqSection: React.FC = () => {
       respuesta: "Somos una empresa dedicada a ofrecer préstamos online de forma rápida y segura.",
     },
     {
-      pregunta: "¿Qué es un préstamo online Merite?",
+      pregunta: "¿Qué es un préstamo online?",
       respuesta: "Es un préstamo 100% digital que puedes solicitar desde tu casa sin trámites complicados.",
     },
     {
-      pregunta: "¿Por qué pedir un préstamo online Merite?",
+      pregunta: "¿Por qué pedir un préstamo online?",
       respuesta: "Porque es rápido, seguro, con requisitos simples y desembolso inmediato.",
     },
   ];
 
   const preguntas2: FaqItem[] = [
     {
-      pregunta: "¿Cómo puedo solicitar un préstamo online Merite?",
+      pregunta: "¿Cómo puedo solicitar un préstamo online?",
       respuesta: "Solo necesitas registrarte, validar tus datos y elegir el monto que deseas.",
     },
     {
-      pregunta: "¿Merite pide aval, seguros u otras garantías adicionales?",
+      pregunta: "¿Pide aval, seguros u otras garantías adicionales?",
       respuesta: "No pedimos aval ni garantías adicionales. Todo el proceso es digital.",
     },
     {
-      pregunta: "¿Qué requisitos necesito para inscribirme en Merite?",
+      pregunta: "¿Qué requisitos necesito para inscribirme?",
       respuesta: "Ser mayor de edad, contar con DNI y tener una cuenta bancaria activa.",
     },
   ];
@@ -43,11 +43,11 @@ const FaqSection: React.FC = () => {
       respuesta: "El pago único se paga en una sola fecha. El préstamo en cuotas se paga en partes.",
     },
     {
-      pregunta: "¿En cuánto tiempo Merite desembolsa el préstamo?",
+      pregunta: "¿En cuánto tiempo  desembolsa el préstamo?",
       respuesta: "Aproximadamente en 5 a 10 minutos después de la aprobación.",
     },
     {
-      pregunta: "¿Cuál es la tasa de interés que ofrece Merite?",
+      pregunta: "¿Cuál es la tasa de interés que ofrece?",
       respuesta: "Depende del monto solicitado y tu calificación crediticia.",
     },
   ];
@@ -58,7 +58,7 @@ const FaqSection: React.FC = () => {
       respuesta: "No, primero debes pagar el préstamo activo.",
     },
     {
-      pregunta: "¿Cuántos préstamos online Merite puedo solicitar?",
+      pregunta: "¿Cuántos préstamos online  puedo solicitar?",
       respuesta: "Puedes tener solo un préstamo activo a la vez.",
     },
     {

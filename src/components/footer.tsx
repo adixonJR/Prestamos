@@ -39,9 +39,7 @@ const Footer: React.FC = () => {
         <div className="footer-col footer-info-col">
           <div className="footer-logo">
             {/* Logo Merite */}
-            <span className="logo-text">
-              <span className="logo-x">X</span>Merite
-            </span>
+         
           </div>
 
           <div className="sbs-info">

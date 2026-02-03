@@ -1,7 +1,7 @@
 /* ===== HEADER ===== */
 
 .faq-header {
-    background: linear-gradient(90deg, #ff4dbc, #ff875b);
+    background: linear-gradient(90deg, #7c2ae8);
     padding: 30px 20px;
     text-align: center;
     color: white;
@@ -52,7 +52,7 @@
   
   .icon {
     font-size: 20px;
-    color: #c02bd9;
+    color: #04BF20;
     font-weight: 700;
   }
   
@@ -86,7 +86,7 @@
     font-size: 34px;
     margin-top: 30px;
     font-weight: 800;
-    color: #ff1dbd;
+    color: #04BF20;
   }
   
   /* ===== RESPONSIVE ===== */
