@@ -17,6 +17,8 @@ router.post("/registro", async (req, res) => {
       apellido_materno,
       email,
       password,
+      rol,          // CLIENTE | ADMIN
+      codigoAdmin   // 👈 SOLO SI ES ADMIN
     } = req.body;
 
     if (
@@ -30,13 +32,30 @@ router.post("/registro", async (req, res) => {
       return res.status(400).json({ message: "Faltan datos" });
     }
 
-    // Encriptar contraseña
+    /* =========================
+       🔐 VALIDAR ADMIN
+    ========================= */
+    if (rol === "ADMIN") {
+      if (!codigoAdmin) {
+        return res.status(400).json({
+          message: "Código de administrador requerido",
+        });
+      }
+
+      if (codigoAdmin !== process.env.ADMIN_CODE) {
+        return res.status(403).json({
+          message: "Código de administrador inválido",
+        });
+      }
+    }
+
+    // 🔐 Encriptar contraseña
     const passwordHash = await bcrypt.hash(password, 10);
 
     const sql = `
       INSERT INTO usuarios
-      (dni, nombres, apellido_paterno, apellido_materno, email, password)
-      VALUES (?, ?, ?, ?, ?, ?)
+      (dni, nombres, apellido_paterno, apellido_materno, email, password, rol)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.query(
@@ -48,6 +67,7 @@ router.post("/registro", async (req, res) => {
         apellido_materno,
         email,
         passwordHash,
+        rol || "CLIENTE",
       ],
       (err) => {
         if (err) {
@@ -57,6 +77,7 @@ router.post("/registro", async (req, res) => {
               .json({ message: "DNI o correo ya registrado" });
           }
 
+          console.error(err);
           return res
             .status(500)
             .json({ message: "Error en la base de datos" });
@@ -66,6 +87,7 @@ router.post("/registro", async (req, res) => {
       }
     );
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Error del servidor" });
   }
 });
@@ -80,10 +102,15 @@ router.post("/login", (req, res) => {
     return res.status(400).json({ message: "Faltan datos" });
   }
 
-  const sql = "SELECT * FROM usuarios WHERE email = ?";
+  const sql = `
+    SELECT id, nombres, email, password, rol, estado
+    FROM usuarios
+    WHERE email = ?
+  `;
 
   db.query(sql, [email], async (err, results) => {
     if (err) {
+      console.error(err);
       return res
         .status(500)
         .json({ message: "Error en la base de datos" });
@@ -97,7 +124,14 @@ router.post("/login", (req, res) => {
 
     const user = results[0];
 
-    // Comparar contraseña
+    // 🚫 Usuario inactivo
+    if (user.estado === 0) {
+      return res
+        .status(403)
+        .json({ message: "Usuario deshabilitado" });
+    }
+
+    // 🔐 Comparar contraseña
     const passwordCorrecta = await bcrypt.compare(
       password,
       user.password
@@ -109,10 +143,14 @@ router.post("/login", (req, res) => {
         .json({ message: "Contraseña incorrecta" });
     }
 
-    // Crear token
+    // 🎟️ Crear token con ROL
     const token = jwt.sign(
-      { id: user.id, email: user.email },
-      "secreto123",
+      {
+        id: user.id,
+        email: user.email,
+        rol: user.rol,
+      },
+      process.env.JWT_SECRET || "secreto123",
       { expiresIn: "1h" }
     );
 
@@ -123,6 +161,7 @@ router.post("/login", (req, res) => {
         id: user.id,
         nombres: user.nombres,
         email: user.email,
+        rol: user.rol,
       },
     });
   });

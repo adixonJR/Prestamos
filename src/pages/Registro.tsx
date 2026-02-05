@@ -11,11 +11,16 @@ const Registro = () => {
     apellido_materno: "",
     email: "",
     password: "",
+    rol: "CLIENTE",
+    codigoAdmin: "",
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -24,6 +29,7 @@ const Registro = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
 
     if (
       !form.dni ||
@@ -33,7 +39,12 @@ const Registro = () => {
       !form.email ||
       !form.password
     ) {
-      alert("Completa todos los campos");
+      setError("Completa todos los campos");
+      return;
+    }
+
+    if (form.rol === "ADMIN" && !form.codigoAdmin) {
+      setError("El código de administrador es obligatorio");
       return;
     }
 
@@ -49,32 +60,38 @@ const Registro = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        alert(data.message || "Error al registrar");
+        setError(data.message || "Error al registrar");
         return;
       }
 
       alert("Registro exitoso");
       navigate("/login");
     } catch (error) {
-      alert("Error de conexión");
+      setError("Error de conexión");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 to-green-300">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm"
+        className="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm"
       >
         <h2 className="text-2xl font-bold text-center mb-4">
           Crear cuenta
         </h2>
 
+        {error && (
+          <div className="bg-red-100 text-red-700 p-2 rounded mb-3 text-sm">
+            {error}
+          </div>
+        )}
+
         <input
           name="dni"
-          placeholder="DNI"
+          placeholder="DNI (8 dígitos)"
           maxLength={8}
           value={form.dni}
           onChange={handleChange}
@@ -83,7 +100,7 @@ const Registro = () => {
 
         <input
           name="nombres"
-          placeholder="Nombres"
+          placeholder="Nombres completos"
           value={form.nombres}
           onChange={handleChange}
           className="w-full border p-2 mb-2 rounded"
@@ -91,7 +108,7 @@ const Registro = () => {
 
         <input
           name="apellido_paterno"
-          placeholder="Apellido Paterno"
+          placeholder="Apellido paterno"
           value={form.apellido_paterno}
           onChange={handleChange}
           className="w-full border p-2 mb-2 rounded"
@@ -99,7 +116,7 @@ const Registro = () => {
 
         <input
           name="apellido_materno"
-          placeholder="Apellido Materno"
+          placeholder="Apellido materno"
           value={form.apellido_materno}
           onChange={handleChange}
           className="w-full border p-2 mb-2 rounded"
@@ -120,13 +137,36 @@ const Registro = () => {
           placeholder="Contraseña"
           value={form.password}
           onChange={handleChange}
-          className="w-full border p-2 mb-4 rounded"
+          className="w-full border p-2 mb-3 rounded"
         />
+
+        {/* 🔐 ROL */}
+        <select
+          name="rol"
+          value={form.rol}
+          onChange={handleChange}
+          className="w-full border p-2 mb-3 rounded"
+        >
+          <option value="CLIENTE">Cliente</option>
+          <option value="ADMIN">Administrador</option>
+        </select>
+
+        {/* 🔑 CÓDIGO ADMIN */}
+        {form.rol === "ADMIN" && (
+          <input
+            name="codigoAdmin"
+            type="password"
+            placeholder="Código de administrador"
+            value={form.codigoAdmin}
+            onChange={handleChange}
+            className="w-full border p-2 mb-3 rounded border-red-400"
+          />
+        )}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition disabled:opacity-50"
         >
           {loading ? "Registrando..." : "Registrarse"}
         </button>
@@ -135,7 +175,7 @@ const Registro = () => {
           ¿Ya tienes cuenta?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-blue-600 cursor-pointer"
+            className="text-blue-600 cursor-pointer hover:underline"
           >
             Inicia sesión
           </span>

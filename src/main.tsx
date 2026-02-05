@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import { AuthProvider } from "./context/AuthContext"
+import Perfil from "./pages/Perfil";
 
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -36,6 +37,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
         <Route path="/tramite" element={<Tramite />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
 
       <Footer />

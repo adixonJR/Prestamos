@@ -39,7 +39,7 @@ const Login = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
 
       // Redirigir
-      navigate("/zona-clientes");
+      navigate("/perfil");
     } catch (err) {
       setError("No se pudo conectar con el servidor");
     } finally {

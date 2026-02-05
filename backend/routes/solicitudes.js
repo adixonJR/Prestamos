@@ -10,16 +10,17 @@ const clean = (v) => (v === "" ? null : v);
 const formatDate = (date) => {
   if (!date) return null;
 
-  // Si viene como DD/MM/YYYY
   if (typeof date === "string" && date.includes("/")) {
     const [day, month, year] = date.split("/");
     return `${year}-${month}-${day}`;
   }
 
-  // Si ya viene correcto
   return date;
 };
 
+// ==============================
+// 📌 REGISTRAR SOLICITUD
+// ==============================
 router.post("/solicitud", (req, res) => {
   const data = req.body;
 
@@ -63,7 +64,7 @@ router.post("/solicitud", (req, res) => {
     clean(data.plazo),
     clean(data.interesTotal),
     clean(data.total),
-    formatDate(clean(data.fecha)) // 🔥 AQUÍ ESTABA EL PROBLEMA
+    formatDate(clean(data.fecha))
   ];
 
   db.query(sql, values, (err, result) => {
@@ -71,7 +72,6 @@ router.post("/solicitud", (req, res) => {
       console.error("❌ MySQL error:", err.sqlMessage);
       return res.status(500).json({
         error: "Error al guardar solicitud",
-        detalle: err.sqlMessage,
       });
     }
 
@@ -79,6 +79,31 @@ router.post("/solicitud", (req, res) => {
       message: "Solicitud registrada correctamente",
       id: result.insertId,
     });
+  });
+});
+
+// ==============================
+// 📌 OBTENER SOLICITUDES POR DNI
+// ==============================
+router.get("/solicitudes/:dni", (req, res) => {
+  const { dni } = req.params;
+
+  const sql = `
+    SELECT *
+    FROM solicitudes
+    WHERE dni = ?
+    ORDER BY id DESC
+  `;
+
+  db.query(sql, [dni], (err, results) => {
+    if (err) {
+      console.error("❌ Error al obtener solicitudes:", err.sqlMessage);
+      return res.status(500).json({
+        error: "Error al obtener solicitudes",
+      });
+    }
+
+    res.json(results);
   });
 });
 
